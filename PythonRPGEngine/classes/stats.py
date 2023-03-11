@@ -2,15 +2,21 @@ import os
 import pandas as pd
 from .enum_classes import Element, Race, AttackType, CombatStyle
 from ..directories import project_directory
+from ..utils.utils import string_to_dict
 
 DEFAULT_STAT_FILE = os.path.join( project_directory, "resources", "DefaultStats.csv" )
 
 class Stats:
-    def __init__(self, file=None):
+    def __init__(self, file=None, use_default=False, **kwargs):
         # Create the dictionary
         self.levels = {}
 
-        self.setup_stats(file=file)
+        if not file is None:
+            self.setup_stats(file=file)
+        elif use_default:
+            self.load_defaults()
+        else:
+            self.load_from_kwargs(**kwargs)
 
     def setup_stats(self, file=None):
         if not file is None:
@@ -46,9 +52,16 @@ class Stats:
 
         for i in range(len(names)):
             self.levels[names[i]] = values[i]
+    
+    def load_from_kwargs(self, **kwargs):
+        for label in kwargs:
+            self.levels[label] = kwargs[label]
 
     def get_stat(self, label):
         if label in self.levels:
             return self.levels[label]
         return 0
 
+    def stats_from_string(value):
+        values = string_to_dict(value, str, int)
+        return Stats(**values)

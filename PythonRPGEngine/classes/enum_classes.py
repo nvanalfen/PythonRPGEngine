@@ -82,8 +82,23 @@ class EquipmentType(Enum):
     WRIST = "Wrist"
     NECK = "Neck"
     BACK = "Back"
+    AMMO = "Ammo"
 
     def get_type(text):
         for eq in EquipmentType:
             if eq.value == text:
                 return eq
+            
+class TargetType(Enum):
+    SELF = "Self"                   # Character
+    PARTY = "Party"                 # Some number >= 1 of party (character included)
+    ALL_PARTY = "All Party"         # The whole party (character included)
+    ALLY = "Ally"                   # Some number >= 1 of allies (character excluded)
+    ALL_ALLY = "All Ally"           # All allies (character excluded)
+    ENEMY = "Enemy"                 # Some number >= 1 of enemies
+    ALL_ENEMY = "All Enemy"         # All enemies
+
+    def get_type(text):
+        for target in TargetType:
+            if target.value == text:
+                return target
