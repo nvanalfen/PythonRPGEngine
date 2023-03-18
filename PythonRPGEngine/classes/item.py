@@ -12,6 +12,9 @@ class Item:
         self.base_cost = cost
         self.rarity = rarity
 
+    def from_string_components():
+        pass
+
 class Consumable(Item):
     def __init__ (self, name:str="", id:str="CON000", description:str="", cost:int=0, rarity:int=0, 
                   regen:dict={}, boons:list[Buff]=[], blights:list[Buff]=[]):
@@ -23,6 +26,9 @@ class Consumable(Item):
         self.regen = regen                  # Amount of gauges (health, mana, energy, etc) to recover
         self.boons = boons                  # Boons (buffs) to apply
         self.blights = blights              # Blights (debuffs) to apply
+    
+    def from_string_components():
+        pass
 
 class Equipment(Item):
     def __init__ (self, name:str="", id:str="EQ000", description:str="", cost:int=0, rarity:int=0,
@@ -40,6 +46,9 @@ class Equipment(Item):
         self.boons = boons                          # Buffs to apply upon battle start
         self.blights = blights                      # Debuffs to apply on battle start
 
+    def from_string_components():
+        pass
+
 class Weapon(Equipment):
     def __init__ (self, name:str="", id:str="WE000", description:str="", cost:int=0, rarity:int=0,
                   piece:EquipmentType=None, requirements:Requirement=None, stats:Stats=None,
@@ -54,3 +63,6 @@ class Weapon(Equipment):
         # Set specific variables
         self.weapon_type = weapon_type              # Weapon type
         self.hands = hands                          # Number of hands needed to wield (1=single-hand, 2=dual-hand)
+
+    def from_string_components():
+        pass
