@@ -65,3 +65,14 @@ class Stats:
     def stats_from_string(value):
         values = string_to_dict(value, str, int)
         return Stats(**values)
+    
+    def __add__(self, other):
+        copied = Stats( **self.levels )
+
+        for label in other.levels:
+            if label in copied.levels:
+                copied.levels[label] += other.levels[label]
+            else:
+                copied.levels[label] = other.levels[label]
+        
+        return copied
