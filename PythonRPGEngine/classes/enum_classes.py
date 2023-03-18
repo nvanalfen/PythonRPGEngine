@@ -77,6 +77,7 @@ class EquipmentType(Enum):
     LEG = "Leg"
     FOOT = "Foot"
     HAND = "Hand"
+    ARM = "Arm"
     BELT = "Belt"
     FINGER = "Finger"
     WRIST = "Wrist"
@@ -102,3 +103,10 @@ class TargetType(Enum):
         for target in TargetType:
             if target.value == text:
                 return target
+
+class BuffType(Enum):
+    GENERAL = "General"
+    DOT = "DOT"
+    REGEN = "Regen"
+    SHIELD = "Shield"
+    STATS = "Stats"
