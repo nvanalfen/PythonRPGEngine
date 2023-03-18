@@ -16,7 +16,8 @@ class Requirement:
         self.race = race                    # Race(s) required (list of races)
         self.weapon_type = weapon_type      # Weapon Type(s) required (list of WeaponType enums)
     
-    def satisfied(self, stats:Stats, level:int, skills:list[str], equipment:list[str], race:list[Race], weapon_type:list[WeaponType]):
+    def satisfied(self, stats:Stats=None, level:int=None, skills:list[str]=[], equipment:list[str]=[],
+                  race:list[Race]=[], weapon_type:list[WeaponType]=[]):
         # Assure that everything passed satisfies requirements
         # All levels must be greater than or equal to the requirement levels
         # All ids and enums required must be included
