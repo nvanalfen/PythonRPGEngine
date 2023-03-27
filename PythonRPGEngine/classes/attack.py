@@ -6,7 +6,7 @@ from ..utils.utils import string_to_dict, string_to_list, string_to_tuple
 
 class Attack:
     def __init__ (self, name:str="", id:str="AT000", description:str="", costs:dict[str,int]={},
-                  target:TargetType=TargetType.ENEMY,
+                  target:TargetType=TargetType.ENEMY, target_count:int=0,
                   damage:Damage=Damage(), base_accuracy:float=1, attack_range:float=1, charge_time:int=0,
                   elements:list[tuple[Element,float]]=[(Element.PHYSICAL,1)], buffs:list[str]=[],
                   requirements:Requirement=None):
@@ -19,6 +19,8 @@ class Attack:
         # Combat variables
         self.costs = costs                          # Cost to use. Dict from gauge (health, mana, energy, etc.) to amount needed
         self.target = target                        # Target type for the attack
+        self.target_count = target_count            # Number of targets. 0 means all
+                                                    # (e.g. target_type == party, target_count = 0 means target all party members)
         self.damage = damage                        # Damage object containing all the scaling and recoil information
         self.base_accuracy = base_accuracy          # Accuracy of attack before scaling
         self.attack_range = attack_range            # Range of attack (experimental)
@@ -31,7 +33,7 @@ class Attack:
         self.requirements = requirements            # Requirements to use attack
     
     def attack_from_string_components(name, id, description, costs, 
-                                      target, 
+                                      target, target_count,
                                       damage_components,
                                       base_accuracy, attack_range, charge_time,
                                       elements, buffs,
@@ -39,6 +41,7 @@ class Attack:
         # All of the components are strings, convert non-string versions into the expected dtype
         costs = string_to_dict(costs, str, int)
         target = TargetType.get_type(target)
+        target_count = int(target_count)
         damage = Damage.damage_from_string_components(*damage_components)
         base_accuracy = float(base_accuracy)
         attack_range = float(attack_range)
@@ -47,6 +50,6 @@ class Attack:
         buffs = string_to_list( buffs )
         requirements = Requirement.requirement_from_string_components(*requirements_components)
 
-        return Attack( name=name, id=id, description=description, costs=costs, target=target,
+        return Attack( name=name, id=id, description=description, costs=costs, target=target, target_count=target_count,
                       damage=damage, base_accuracy=base_accuracy, attack_range=attack_range, charge_time=charge_time,
                        elements=elements, buffs=buffs, requirements=requirements )
